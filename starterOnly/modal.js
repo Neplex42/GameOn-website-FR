@@ -49,7 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (firstName.value.length < 2) {
       firstName.style.border = "3px solid red";
       document.querySelector('.error_firstname')?.remove();
-      firstName.insertAdjacentHTML("afterend", "<p class='error_message error_firstname'>Veuillez entrer 2 caractères ou plus pour le champ du nom.</p>");
+      firstName.closest('.formData').setAttribute("data-error", "Veuillez entrer 2 caractères ou plus pour le champ du nom.");
+      firstName.closest('.formData').setAttribute("data-error-visible", "true");
       submitButton.setAttribute("disabled", "true");
       if (errorStates.firstName === false) {
         errorStates.firstName = true;
@@ -61,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       firstName.style.borderColor = "green";
       document.querySelector('.error_firstname')?.remove();
+      firstName.closest('.formData').setAttribute("data-error-visible", "false");
       if (errorStates.firstName) {
         errorStates.firstName = false;
         if (errorStates.firstName === false) {
