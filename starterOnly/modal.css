@@ -225,6 +225,9 @@ input {
   height: 48px;
 }
 
+.text-control, .checkbox-label, .checkbox2-label {
+}
+
 .formData.container_radio {
   display: flex;
   flex-wrap: wrap;
@@ -371,6 +374,11 @@ input[data-error]::after {
   color: #fff;
   cursor: pointer;
   border: 0;
+}
+
+.btn-submit:disabled {
+  background-color: grey;
+  cursor: not-allowed;
 }
 
 /* custom select styles */
