@@ -61,10 +61,12 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       firstName.style.borderColor = "green";
       document.querySelector('.error_firstname')?.remove();
-      errorStates.firstName = false;
-      if (errorStates.firstName === false) {
-        error_defined -= 1;
-        console.log(error_defined)
+      if (errorStates.firstName) {
+        errorStates.firstName = false;
+        if (errorStates.firstName === false) {
+          error_defined -= 1;
+          console.log(error_defined)
+        }
       }
       if (error_defined === 0) {
         submitButton.removeAttribute("disabled");
