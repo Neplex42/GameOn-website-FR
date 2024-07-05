@@ -12,6 +12,8 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const closeBtn = document.querySelector('.bground .content .close');
+const closeBtnForm = document.querySelector('.close-modal-button');
+const titleSuccess = document.querySelector('.valid-form-message');
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -109,15 +111,25 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   form.addEventListener("submit", (event) => {
-    event.preventDefault();
     if (error_defined === 0) {
-      console.log("submit");
-      form.submit();
+      event.preventDefault();
+      form.style.opacity = "0";
+      form.style.visibility = "hidden";
+      titleSuccess.classList.remove('hide_opacity');
+      closeBtnForm.classList.remove('hide_opacity');
+
+      setTimeout(() => {
+        form.submit();
+        titleSuccess.classList.add('hide_opacity');
+        closeBtnForm.classList.add('hide_opacity');
+      }, 10000);
+
+      closeBtn.addEventListener("click", () => form.submit());
+      closeBtnForm.addEventListener("click", () => form.submit());
     }
   });
 
   function enableSubmit() {
-    console.log(error_defined);
     if (error_defined === 0) {
       submitButton.removeAttribute("disabled");
     } else {

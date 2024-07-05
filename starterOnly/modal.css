@@ -225,7 +225,8 @@ input {
   height: 48px;
 }
 
-.text-control, .checkbox-label, .checkbox2-label {
+.checkbox-label, .checkbox2-label {
+  cursor: pointer;
 }
 
 .formData.container_radio {
@@ -362,6 +363,32 @@ input[data-error]::after {
 .close:after {
   transform: rotate(-45deg);
 }
+
+/** Modal Success **/
+.hide_opacity {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+.valid-form-message {
+  padding-right: 3rem;
+  position: absolute;
+  top: 20rem;
+  text-align: center;
+  transition: all 1s ease-in-out;
+}
+
+.close-modal-button {
+  border: none;
+  width: 75%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% 550%;
+  transition: all 1s ease-in-out;
+}
+
+/** End modal Success **/
 
 .btn-submit,
 .btn-signup {
@@ -517,6 +544,7 @@ input[data-error]::after {
 }
 
 .hero-img img {
+  object-fit: cover;
   width: 100%;
   height: 100%;
   display: block;
