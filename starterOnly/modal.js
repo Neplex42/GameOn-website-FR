@@ -76,7 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
         error_defined -= 1;
       }
     }
-    enableSubmit();
   }
 
   fields.firstName.addEventListener("change", () => {
@@ -111,8 +110,20 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    validateField(fields.firstName, fields.firstName.value.length < 2, "Veuillez entrer 2 caractères ou plus pour le champ du nom.", "firstName");
+    validateField(fields.lastName, fields.lastName.value.length < 2, "Veuillez entrer 2 caractères ou plus pour le champ du nom.", "lastName");
+    validateField(fields.email, !(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(fields.email.value)), "Vous devez entrer une adresse email valide.", "email");
+    validateField(fields.birthdate, fields.birthdate.value === "", "Vous devez entrer votre date de naissance.", "birthdate");
+    validateField(fields.quantity, !(/^[0-9]+$/.test(fields.quantity.value)), "Vous devez entrer un nombre entre 0 et 99.", "quantity");
+    fields.location.forEach(radio => {
+      let isChecked = Array.from(fields.location).some(radio => radio.checked);
+      validateField(fields.location[0], !isChecked, "Vous devez choisir une ville.", "location");
+    });
+    validateField(fields.terms, !fields.terms.checked, "Vous devez vérifier que vous acceptez les termes et conditions.", "terms");
+
     if (error_defined === 0) {
-      event.preventDefault();
       form.style.opacity = "0";
       form.style.visibility = "hidden";
       titleSuccess.classList.remove('hide_opacity');
@@ -128,13 +139,5 @@ document.addEventListener("DOMContentLoaded", () => {
       closeBtnForm.addEventListener("click", () => form.submit());
     }
   });
-
-  function enableSubmit() {
-    if (error_defined === 0) {
-      submitButton.removeAttribute("disabled");
-    } else {
-      submitButton.setAttribute("disabled", "true");
-    }
-  }
 });
 
