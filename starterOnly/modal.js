@@ -10,7 +10,6 @@ function editNav() {
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
-const formData = document.querySelectorAll(".formData");
 const closeBtn = document.querySelector('.bground .content .close');
 const closeBtnForm = document.querySelector('.close-modal-button');
 const titleSuccess = document.querySelector('.valid-form-message');
@@ -78,12 +77,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+   function isValidName(name) {
+    return name.trim().length < 2 || !/^[a-zA-ZÀ-ÿ-]+$/.test(name);
+  }
+
+  function isValidBirthdate(date) {
+    const birthdate = new Date(date);
+    const year = birthdate.getFullYear();
+    return year >= 1850 && birthdate <= new Date();
+  }
+
   fields.firstName.addEventListener("change", () => {
-    validateField(fields.firstName, fields.firstName.value.length < 2, "Veuillez entrer 2 caractères ou plus pour le champ du nom.", "firstName");
+    validateField(fields.firstName, isValidName(fields.firstName.value), "Veuillez entrer 2 caractères ou plus pour le champ du nom.", "firstName");
   });
 
   fields.lastName.addEventListener("change", () => {
-    validateField(fields.lastName, fields.lastName.value.length < 2, "Veuillez entrer 2 caractères ou plus pour le champ du nom.", "lastName");
+    validateField(fields.lastName, isValidName(fields.lastName.value), "Veuillez entrer 2 caractères ou plus pour le champ du nom.", "lastName");
   });
 
   fields.email.addEventListener("change", () => {
@@ -91,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   fields.birthdate.addEventListener("change", () => {
-    validateField(fields.birthdate, fields.birthdate.value === "", "Vous devez entrer votre date de naissance.", "birthdate");
+    validateField(fields.birthdate, !isValidBirthdate(fields.birthdate.value), "Vous devez entrer votre date de naissance.", "birthdate");
   });
 
   fields.quantity.addEventListener("change", () => {
@@ -112,8 +121,8 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    validateField(fields.firstName, fields.firstName.value.length < 2, "Veuillez entrer 2 caractères ou plus pour le champ du nom.", "firstName");
-    validateField(fields.lastName, fields.lastName.value.length < 2, "Veuillez entrer 2 caractères ou plus pour le champ du nom.", "lastName");
+    validateField(fields.firstName, isValidName(fields.firstName.value), "Veuillez entrer 2 caractères ou plus pour le champ du nom.", "firstName");
+    validateField(fields.lastName, isValidName(fields.lastName.value), "Veuillez entrer 2 caractères ou plus pour le champ du nom.", "lastName");
     validateField(fields.email, !(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(fields.email.value)), "Vous devez entrer une adresse email valide.", "email");
     validateField(fields.birthdate, fields.birthdate.value === "", "Vous devez entrer votre date de naissance.", "birthdate");
     validateField(fields.quantity, !(/^[0-9]+$/.test(fields.quantity.value)), "Vous devez entrer un nombre entre 0 et 99.", "quantity");
